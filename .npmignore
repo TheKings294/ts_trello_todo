@@ -1,0 +1,26 @@
+# TS file
+src/
+*.ts
+!.d.ts
+
+# Test
+test/*
+.test.ts
+*.spec.ts
+coverage/
+.vitest/
+
+# Configuration
+tsconfig.json
+vitest.config.ts
+
+# GIT
+.git/
+.github/
+.gitignore
+
+# Dev
+node_modules/
+*.log
+.DS_Store
+.idea

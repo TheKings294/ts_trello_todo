@@ -1,17 +1,37 @@
 {
-  "name": "ts_trello",
+  "name": "ts_trello_todo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Un gestionnaire de tache et todo en ligne de commande",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test-covrage": "vitest run -covrage",
+    "build": "tsc",
+    "prepublishOnly": "npm run test && npm run build"
   },
   "keywords": [],
   "author": "Antoine Gonsard",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
     "@types/node": "^24.10.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "class-validator": "^0.14.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheKings294/ts_trello_todo"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bin": {
+    "task": ".dist/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
