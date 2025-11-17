@@ -1,7 +1,7 @@
 import type {StatusCard} from "../utils/Types.js";
 
 export interface ICard {
-    id: number;
+    id: string;
     name: string;
     description?: string | undefined;
     status: StatusCard;
