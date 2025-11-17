@@ -1,14 +1,18 @@
 import {AbstractRepository} from "./AbstractRepository.js";
 import * as fs from "node:fs";
+import {BoardManager} from "../manager/boardManager.js";
 
 export class BoardRepository extends AbstractRepository {
     private path(board: string): string {
         return `./data/${board}.json`
     }
 
-    public load(board: string): {} {
-        if (!fs.existsSync(this.path(board))) return { card: [] };
-        return JSON.parse(fs.readFileSync(this.path(board), 'utf8'));
+    public load(): BoardManager {
+        const manager = new BoardManager();
+        //if (!fs.existsSync(this.path(board))) return { card: [] };
+        //return JSON.parse(fs.readFileSync(this.path(board), 'utf8'));
+
+        return manager
     }
 
     public save(boardData: any) {

@@ -1,12 +1,18 @@
 import type {ICard} from "../interfaces/CardInterface.js";
 import type {CardDTO, StatusCard} from "../utils/Types.js";
+import {IsAlphanumeric, IsDate} from "class-validator";
 
 export class Card implements ICard {
-    id: number;
+    @IsAlphanumeric()
+    id: string;
+    @IsAlphanumeric()
     name: string;
+    @IsAlphanumeric()
     description?: string | undefined;
     status: StatusCard;
+    @IsDate()
     createAt: Date;
+    @IsDate()
     updateAt: Date;
 
     constructor(DTO: CardDTO) {

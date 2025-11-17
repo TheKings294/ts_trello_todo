@@ -1,7 +1,8 @@
-import fs from "node:fs";
+import type {Board} from "../models/Board.js";
+import type {AbstractManager} from "../manager/abstractManager.js";
 
 export abstract class AbstractRepository {
-    abstract load(board: string): {};
+    abstract load(): AbstractManager;
 
-    abstract save(boardData: any): void;
+    abstract save(boardData: Board): void;
 }

@@ -1,14 +1,15 @@
 import type {Card} from "../models/Card.js";
+import {IsAlphanumeric} from "class-validator";
 
-export type StatusCard = Array<string>;
+export type StatusCard = string;
 
 export type CardDTO = {
-    id: number;
+    id: string;
     name: string;
-    description?: string;
+    description?: string | undefined;
     status: StatusCard;
-    createAt: Date;
-    updateAt: Date;
+    createAt?: Date;
+    updateAt?: Date;
 }
 export type BoardDTO = {
     name: string;
