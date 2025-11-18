@@ -1,11 +1,12 @@
 import {AbstractCommand} from "./AbstractCommand.js";
 import type {AbstractRepository} from "../repositories/AbstractRepository.js";
-import type {AbstractManager} from "../manager/abstractManager.js";
 import type {Command} from "commander";
 import type {IEditCardCommand} from "../interfaces/CommandInterfaces.js";
+import type {CardManager} from "../manager/cardManager.js";
+import type {ExecReturn} from "../utils/Types.js";
 
-class EditCardCommand extends AbstractCommand {
-    constructor(repo: AbstractRepository, manager: AbstractManager) {
+class EditCardCommand extends AbstractCommand<CardManager> {
+    constructor(repo: AbstractRepository, manager: CardManager) {
         super(repo, manager);
     }
 
@@ -31,7 +32,7 @@ class EditCardCommand extends AbstractCommand {
             })
     }
 
-    public exec(args: Record<string, string>): boolean {
-        return true
+    public exec(args: Record<string, string>): ExecReturn {
+        return {success: true, message: "Card edit"}
     }
 }

@@ -1,11 +1,12 @@
 import {AbstractCommand} from "./AbstractCommand.js";
 import type {AbstractRepository} from "../repositories/AbstractRepository.js";
-import type {AbstractManager} from "../manager/abstractManager.js";
 import type {Command} from "commander";
 import type {IAddBoardCommand} from "../interfaces/CommandInterfaces.js";
+import type {BoardManager} from "../manager/boardManager.js";
+import type {ExecReturn} from "../utils/Types.js";
 
-class AddBoardCommand extends AbstractCommand {
-    constructor(repo: AbstractRepository, manager: AbstractManager) {
+class AddBoardCommand extends AbstractCommand<BoardManager> {
+    constructor(repo: AbstractRepository, manager: BoardManager) {
         super(repo, manager);
     }
 
@@ -29,7 +30,7 @@ class AddBoardCommand extends AbstractCommand {
             })
     }
 
-    public exec(args: Record<string, string>): boolean {
-        return true
+    public exec(args: Record<string, string>): ExecReturn {
+        return {success: true, message: "Add board"}
     }
 }
