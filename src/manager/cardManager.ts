@@ -7,8 +7,11 @@ export class CardManager {
         this.card.push(card);
     }
 
-    public findByName(name: string): Card | boolean {
-        if (typeof name !== "string") return false;
-        return this.card.find(b => b.name === name) || false;
+    public findByName(id: string): Card | undefined {
+        return this.card.find(b => b.id === id);
+    }
+
+    public deleteCard(card: Card): void  {
+        this.card.splice(this.card.indexOf(card), 1);
     }
 }

@@ -7,11 +7,13 @@ export class BoardManager {
         this.board.push(board);
     }
 
-    public findByName(name: string | undefined): Board | boolean {
-        if (typeof name !== "string") return false;
-        return this.board.find(b => b.name === name) || false
+    public findByName(name: string | undefined): Board | undefined {
+        return this.board.find(b => b.name === name)
     }
     public getBoardList(): Board[] {
         return this.board;
+    }
+    public deleteBoard(board: Board): void {
+        this.board.splice(this.board.indexOf(board), 1);
     }
 }

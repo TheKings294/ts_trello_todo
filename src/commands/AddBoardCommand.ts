@@ -1,9 +1,9 @@
 import {AbstractCommand} from "./AbstractCommand.js";
 import type {AbstractRepository} from "../repositories/AbstractRepository.js";
 import type {Command} from "commander";
-import type {IAddBoardCommand} from "../interfaces/CommandInterfaces.js";
 import type {BoardManager} from "../manager/boardManager.js";
-import type {ExecReturn} from "../utils/Types.js";
+import type {BoardDTO, ExecReturn} from "../utils/Types.js";
+import {Board} from "../models/Board.js";
 
 class AddBoardCommand extends AbstractCommand<BoardManager> {
     constructor(repo: AbstractRepository, manager: BoardManager) {
@@ -11,7 +11,7 @@ class AddBoardCommand extends AbstractCommand<BoardManager> {
     }
 
     public getName(): string {
-        return "create-board";
+        return "new-board";
     }
 
     public getDescription(): string {
@@ -25,12 +25,30 @@ class AddBoardCommand extends AbstractCommand<BoardManager> {
             .argument("<name>", "Board name")
             .argument("<state...>", "Board state list")
             .option("-d, --description <text>", "Board description")
-            .action((name: string, state: string[], option: IAddBoardCommand) => {
-
+            .action((name: string, state: string[], option) => {
+                const data: Record<string, string | string[]> = {
+                    name: name,
+                    state: state,
+                }
+                if (option) {
+                    data.description = option
+                }
+                const result = this.exec(data)
+                this.printResult(result)
             })
     }
 
-    public exec(args: Record<string, string>): ExecReturn {
+    public exec(args: Record<string, string | string[]>): ExecReturn {
+        const boardDTO: BoardDTO = {
+            name: args.name as string,
+            description: args.description as string,
+            status: args.state as string[],
+            card: []
+        };
+        const board = new Board(boardDTO);
+        this.manager.addBoard(board);
+        this.repo.save(board);
+
         return {success: true, message: "Add board"}
     }
 }

@@ -24,11 +24,15 @@ export class AddCardCommand extends AbstractCommand<BoardManager> {
         program
             .command(this.getName())
             .description(this.getDescription())
-            .argument("<name>", "Name to greet")
+            .argument("<board-name>", "Name of the board")
+            .argument("<name>", "Card name")
+            .argument("<status>", "Status card")
             .option('-d, --description <text>', 'descriptions')
-            .action((name: string, option) => {
+            .action((boardName: string, name: string, status: string, option) => {
                 const data: Record<string, string> = {
+                    boardName: boardName,
                     name: name,
+                    status: status,
                 };
                 if (option) {
                     data.description = option
@@ -40,22 +44,24 @@ export class AddCardCommand extends AbstractCommand<BoardManager> {
     }
 
     public exec(args: Record<string, string>): ExecReturn {
-        if (Object.keys(args).length < 1) {
-            return {success: false, message: "Invalid arguments"};
-        }
         if (this.manager.getBoardList().length === 0) {
             return {success: false, message: "No boards in the list"};
         }
-        const board: Board | boolean = this.manager.findByName(args["board-name"]);
+        const board: Board | boolean = this.manager.findByName(args.boardName);
         if (typeof board === "boolean") {
             return {success: false, message: "Board not found in the list"};
+        }
+
+        const statusCard = board.status.find(s => s === args.status);
+        if (typeof statusCard === "undefined") {
+            return {success: false, message: "No status cards in the list"};
         }
 
         const cardDTO: CardDTO = {
             id: Card.generateId(),
             name: args.name as string,
-            description: args.des,
-            status: board.status.find(s => s === args.status) as string
+            description: args.description,
+            status: statusCard as string
         }
 
         const card: Card = new Card(cardDTO);

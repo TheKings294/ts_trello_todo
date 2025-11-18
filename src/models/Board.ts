@@ -38,4 +38,8 @@ export class Board implements IBord {
     public getCreatedAtDate(): Date {
         return this.createdAt;
     }
+
+    public getCardManager(): CardManager {
+        return this.card;
+    }
 }
