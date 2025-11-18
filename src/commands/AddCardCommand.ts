@@ -1,15 +1,14 @@
 import {AbstractCommand} from "./AbstractCommand.js";
 import type {AbstractRepository} from "../repositories/AbstractRepository.js";
 import type {Board} from "../models/Board.js";
-import {BoardManager} from "../manager/boardManager.js";
 import {Card} from "../models/Card.js";
-import type {CardDTO} from "../utils/Types.js";
+import type {CardDTO, ExecReturn} from "../utils/Types.js";
 import type {Command} from "commander";
-import type {AbstractManager} from "../manager/abstractManager.js";
+import type {BoardManager} from "../manager/boardManager.js";
 
 
-export class AddCardCommand extends AbstractCommand {
-    constructor(repo: AbstractRepository, manager: AbstractManager) {
+export class AddCardCommand extends AbstractCommand<BoardManager> {
+    constructor(repo: AbstractRepository, manager: BoardManager) {
         super(repo, manager);
     }
 
@@ -31,18 +30,25 @@ export class AddCardCommand extends AbstractCommand {
                 const data: Record<string, string> = {
                     name: name,
                 };
-                console.log(option);
-                this.exec(data)
+                if (option) {
+                    data.description = option
+                }
+
+                const result: ExecReturn = this.exec(data)
+                this.printResult(result)
             });
     }
 
-    public exec(args: Record<string, string>): boolean {
-        /*if (Object.keys(args).length < 5) {
-            throw new Error("Invalid argument");
+    public exec(args: Record<string, string>): ExecReturn {
+        if (Object.keys(args).length < 1) {
+            return {success: false, message: "Invalid arguments"};
+        }
+        if (this.manager.getBoardList().length === 0) {
+            return {success: false, message: "No boards in the list"};
         }
         const board: Board | boolean = this.manager.findByName(args["board-name"]);
         if (typeof board === "boolean") {
-            throw new Error("Board not found !");
+            return {success: false, message: "Board not found in the list"};
         }
 
         const cardDTO: CardDTO = {
@@ -54,9 +60,8 @@ export class AddCardCommand extends AbstractCommand {
 
         const card: Card = new Card(cardDTO);
         board.card.addCard(card);
-        this.repo.save(board)*/
+        this.repo.save(board)
 
-        console.log(args)
-        return true
+        return {success: true, message: "Successfully created card"};
     }
 }

@@ -3,11 +3,11 @@ import type {BoardManager} from "../manager/boardManager.js";
 import type {Command} from "commander";
 import type {AbstractManager} from "../manager/abstractManager.js";
 
-export abstract class AbstractCommand {
+export abstract class AbstractCommand<TManager extends AbstractManager> {
     protected repo: AbstractRepository;
-    protected manager: AbstractManager;
+    protected manager: TManager;
 
-    constructor(repo: AbstractRepository, manager : AbstractManager) {
+    constructor(repo: AbstractRepository, manager : TManager) {
         this.repo = repo;
         this.manager = manager
     }
@@ -16,5 +16,13 @@ export abstract class AbstractCommand {
     abstract getDescription(): string;
     abstract register(program: Command): void
 
-    abstract exec(args : Record<string, string>): boolean;
+    abstract exec(args : Record<string, string>): object;
+
+    public printResult(result: { success: boolean; message: string }) {
+        if (result.success) {
+            console.log("✔", result.message);
+        } else {
+            console.log("✖", result.message);
+        }
+    }
 }

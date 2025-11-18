@@ -1,5 +1,4 @@
 import type {Card} from "../models/Card.js";
-import {IsAlphanumeric} from "class-validator";
 
 export type StatusCard = string;
 
@@ -17,3 +16,5 @@ export type BoardDTO = {
     status: Array<string>;
     card: Array<Card>;
 }
+
+export type ExecReturn = {success: boolean; message: string};

@@ -11,4 +11,7 @@ export class BoardManager {
         if (typeof name !== "string") return false;
         return this.board.find(b => b.name === name) || false
     }
+    public getBoardList(): Board[] {
+        return this.board;
+    }
 }
