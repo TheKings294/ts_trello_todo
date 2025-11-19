@@ -72,6 +72,7 @@ export class EditBoardCommand extends AbstractCommand<BoardManager> {
                 }
             })
         }
+        this.repo.save(Board);
         return {success: true, message: "Board edited"}
     }
 }

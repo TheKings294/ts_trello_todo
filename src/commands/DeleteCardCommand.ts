@@ -74,6 +74,7 @@ export class DeleteCardCommand extends AbstractCommand<BoardManager> {
         }
         cardManager.deleteCard(card)
 
+        this.repo.save(board)
         return {success: true, message: "Deleting a card"};
     }
 }

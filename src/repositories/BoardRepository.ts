@@ -19,4 +19,10 @@ export class BoardRepository extends AbstractRepository {
         const file = this.path(boardData.name);
         fs.writeFileSync(file, JSON.stringify(boardData, null, 2));
     }
+    public delete(boardData: any) {
+        const file = this.path(boardData.name);
+        fs.unlink(file, (error) => {
+            if (error) throw error;
+        });
+    }
 }

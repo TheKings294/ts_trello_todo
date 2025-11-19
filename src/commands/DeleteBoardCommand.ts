@@ -65,6 +65,13 @@ export class DeleteBoardCommand extends AbstractCommand<BoardManager> {
         }
 
         this.manager.deleteBoard(board as Board);
+        try {
+            this.repo.delete(board);
+        } catch (e) {
+            if (e instanceof Error) {
+                return {success: false, message: e.message};
+            }
+        }
 
         return {success: true, message: `Deleting board:`};
     }

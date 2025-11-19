@@ -5,4 +5,5 @@ export abstract class AbstractRepository {
     abstract load(): AbstractManager;
 
     abstract save(boardData: Board): void;
+    abstract delete(boardData: Board): void;
 }
