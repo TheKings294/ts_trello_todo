@@ -5,7 +5,7 @@ import type {BoardManager} from "../manager/boardManager.js";
 import type {ExecReturn, ExecReturnList} from "../utils/Types.js";
 import type {Board} from "../models/Board.js";
 
-class ListBoardCommand extends AbstractCommand<BoardManager> {
+export class ListBoardCommand extends AbstractCommand<BoardManager> {
     constructor(repo: AbstractRepository, manager: BoardManager) {
         super(repo, manager);
     }

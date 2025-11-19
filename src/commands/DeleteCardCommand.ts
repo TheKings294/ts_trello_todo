@@ -9,7 +9,7 @@ import type {BoardManager} from "../manager/boardManager.js";
 import type {CardManager} from "../manager/cardManager.js";
 import type {Card} from "../models/Card.js";
 
-class DeleteCardCommand extends AbstractCommand<BoardManager> {
+export class DeleteCardCommand extends AbstractCommand<BoardManager> {
     constructor(repo: AbstractRepository, manager: BoardManager) {
         super(repo, manager);
     }

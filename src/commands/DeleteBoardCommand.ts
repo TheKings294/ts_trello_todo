@@ -7,7 +7,7 @@ import type {ExecReturn} from "../utils/Types.js";
 import inquirer from "inquirer";
 import type {Board} from "../models/Board.js";
 
-class DeleteBoardCommand extends AbstractCommand<BoardManager> {
+export class DeleteBoardCommand extends AbstractCommand<BoardManager> {
     constructor(repo: AbstractRepository, manager: BoardManager) {
         super(repo, manager);
     }
@@ -58,7 +58,7 @@ class DeleteBoardCommand extends AbstractCommand<BoardManager> {
     }
 
     public exec(args: Record<string, string>): ExecReturn {
-        const board: boolean | Board = this.manager.findByName(args.name);
+        const board: undefined | Board = this.manager.findByName(args.name);
 
         if (!board) {
             return {success: false, message: "No board find"};

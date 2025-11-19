@@ -8,7 +8,7 @@ import type {Board} from "../models/Board.js";
 import type {BoardManager} from "../manager/boardManager.js";
 import type {Card} from "../models/Card.js";
 
-class ListCardCommand extends AbstractCommand<BoardManager> {
+export class ListCardCommand extends AbstractCommand<BoardManager> {
     constructor(repo: AbstractRepository, manager: BoardManager) {
         super(repo, manager);
     }

@@ -47,8 +47,8 @@ export class AddCardCommand extends AbstractCommand<BoardManager> {
         if (this.manager.getBoardList().length === 0) {
             return {success: false, message: "No boards in the list"};
         }
-        const board: Board | boolean = this.manager.findByName(args.boardName);
-        if (typeof board === "boolean") {
+        const board: Board | undefined = this.manager.findByName(args.boardName);
+        if (!board) {
             return {success: false, message: "Board not found in the list"};
         }
 
