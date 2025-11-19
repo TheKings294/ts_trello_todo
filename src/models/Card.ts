@@ -23,7 +23,7 @@ export class Card implements ICard {
     constructor(DTO: CardDTO) {
         this.id = DTO.id;
         this.name = DTO.name;
-        this.description = DTO.description
+        this.description = typeof DTO.description === 'undefined' ? '' : DTO.description;
         this.status = DTO.status;
         this.createAt = new Date(Date.now());
         this.updateAt = new Date(Date.now());

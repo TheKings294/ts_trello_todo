@@ -25,7 +25,7 @@ export class Board implements IBord {
 
     constructor(DTO: BoardDTO) {
         this.name = DTO.name;
-        this.description = DTO.description
+        this.description = typeof DTO.description === 'undefined' ? '' : DTO.description;
         this.status = DTO.status;
         this.createdAt = new Date(Date.now());
         this.updatedAt = new Date(Date.now());
