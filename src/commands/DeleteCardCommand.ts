@@ -26,10 +26,10 @@ export class DeleteCardCommand extends AbstractCommand<BoardManager> {
         program
             .command(this.getName())
             .description(this.getDescription())
-            .argument("<name>", "The board name")
+            .argument("<board-name>", "The board name")
             .argument("<id>", "The card ID")
             .option("-y, --yes", "Approuve the deleting os the card")
-            .action(async (name: string, id: string, option: IDeleteCommand) => {
+            .action(async (boardName: string, id: string, option: IDeleteCommand) => {
                 let result = {success: true, message: "Card deleted"};
                 if (!option.yes) {
                     const {confirm} = await inquirer.prompt([
@@ -51,7 +51,7 @@ export class DeleteCardCommand extends AbstractCommand<BoardManager> {
                 }
 
                 const data: Record<string, string> = {
-                    nameBoard: name,
+                    nameBoard: boardName,
                     idCard: id
                 }
 

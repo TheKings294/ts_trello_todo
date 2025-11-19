@@ -26,15 +26,15 @@ export class ListCardCommand extends AbstractCommand<BoardManager> {
             .command(this.getName())
             .description(this.getDescription())
             .argument("<board-name>", "Board name, where the card is store")
-            .option("-sc, --search <search>", "Search in card name an description")
+            .option("--search <search>", "Search in card name an description")
             .option("-s, --status <status>", "Search card by status")
             .option("-c, --created <date>", "Search card by date of creation")
             .option("-e, --edited <date>", "Search card by date of edition")
-            .option("-ca, --created-after <date>", "Search card by date of creation after x")
-            .option("-cb, --created-before <date>", "Search card by date of creation before x")
-            .action((name: string, option): void => {
+            .option("--created-after <date>", "Search card by date of creation after x")
+            .option("--created-before <date>", "Search card by date of creation before x")
+            .action((boardName: string, option): void => {
                 const data: Record<string, string> = {
-                    nameBoard: name
+                    nameBoard: boardName
                 }
                 const fields = ["search", "created", "edited", "createdAfter", "createdBefore"] as const;
                 for (const key of fields) {

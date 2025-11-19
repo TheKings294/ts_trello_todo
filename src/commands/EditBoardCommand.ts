@@ -12,7 +12,7 @@ export class EditBoardCommand extends AbstractCommand<BoardManager> {
     }
 
     public getName(): string {
-        return "update-card";
+        return "update-board";
     }
 
     public getDescription(): string {

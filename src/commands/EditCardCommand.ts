@@ -24,7 +24,7 @@ export class EditCardCommand extends AbstractCommand<BoardManager> {
         program
             .command(this.getName())
             .description(this.getDescription())
-            .argument("<name>", "The name of the board")
+            .argument("<board-name>", "The name of the board")
             .argument("<id>", "The id of the card")
             .option("-s, --status <status>", "The status of the card")
             .option("-d, --description <desc>", "The description of the card")

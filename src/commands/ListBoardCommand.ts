@@ -22,11 +22,11 @@ export class ListBoardCommand extends AbstractCommand<BoardManager> {
         program
             .command(this.getName())
             .description(this.getDescription())
-            .option("-sc, --search <search>", "Search in board name an description")
+            .option("--search <search>", "Search in board name an description")
             .option("-c, --created <date>", "Search board by date of creation")
             .option("-e, --edited <date>", "Search board by date of edition")
-            .option("-ca, --created-after <date>", "Search board by date of creation after x")
-            .option("-cb, --created-before <date>", "Search board by date of creation before x")
+            .option("--created-after <date>", "Search board by date of creation after x")
+            .option("--created-before <date>", "Search board by date of creation before x")
             .action((option): void => {
                 const data: Record<string, string> = {}
                 const fields = ["search", "created", "edited", "createdAfter", "createdBefore"] as const;
