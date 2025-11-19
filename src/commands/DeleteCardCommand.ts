@@ -61,7 +61,7 @@ export class DeleteCardCommand extends AbstractCommand<BoardManager> {
     }
 
     public exec(args: Record<string, string>): ExecReturn {
-        const board: undefined | Board = this.manager.findByName(args.name)
+        const board: undefined | Board = this.manager.findByName(args.nameBoard)
 
         if (!board) {
             return {success: false, message: "No board find"};

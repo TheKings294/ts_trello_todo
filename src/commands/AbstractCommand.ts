@@ -2,6 +2,7 @@ import type {AbstractRepository} from "../repositories/AbstractRepository.js";
 import type {BoardManager} from "../manager/boardManager.js";
 import type {Command} from "commander";
 import type {AbstractManager} from "../manager/abstractManager.js";
+import type {ExecReturnList} from "../utils/Types.js";
 
 export abstract class AbstractCommand<TManager extends AbstractManager> {
     protected repo: AbstractRepository;
@@ -24,5 +25,9 @@ export abstract class AbstractCommand<TManager extends AbstractManager> {
         } else {
             console.log("✖", result.message);
         }
+    }
+
+    protected isExecReturnList(obj: any): obj is ExecReturnList {
+        return obj && Array.isArray(obj.data);
     }
 }

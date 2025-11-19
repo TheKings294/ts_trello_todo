@@ -38,6 +38,6 @@ export class Card implements ICard {
     }
 
     static generateId() {
-        return crypto.randomUUID().replace(/-/g, ' ').slice(0, length);
+        return crypto.randomUUID().replace(/-/g, ' ')
     }
 }

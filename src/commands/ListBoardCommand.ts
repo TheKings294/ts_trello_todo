@@ -38,6 +38,9 @@ export class ListBoardCommand extends AbstractCommand<BoardManager> {
 
                 const result = this.exec(data)
                 this.printResult(result)
+                if (this.isExecReturnList(result)) {
+                    this.printBoards(result.data as Board[]);
+                }
             })
     }
 
@@ -48,31 +51,33 @@ export class ListBoardCommand extends AbstractCommand<BoardManager> {
             return {success: false, message: "Board list is empty"};
         }
         if (args.search) {
+            args.search = args.search.toLowerCase();
             boardList = boardList.filter(board =>
-                board.name.includes(args.search as string) ||
-                board.description?.includes(args.search as string))
+                board.name.toLowerCase().includes(args.search as string) ||
+                board.description?.toLowerCase().includes(args.search as string))
 
             if (this.isEmptyList(boardList)) return {success: true, message: "Board list is empty", data: boardList};
         }
         if (args.created) {
-            const dateSearch = new Date(args.created);
-            boardList.filter(board => board.getCreatedAtDate() === dateSearch)
+            const dateSearch = new Date(args.created).setHours(0, 0, 0, 0);
+            boardList = boardList.filter(board => board.getCreatedAtDate().setHours(0,0,0,0) === dateSearch)
+
             if (this.isEmptyList(boardList)) return {success: true, message: "Board list is empty", data: boardList};
         }
         if (args.edited) {
-            const dateSearch = new Date(args.edited);
-            boardList = boardList.filter(board => board.getUpdateAtDate() === dateSearch)
+            const dateSearch = new Date(args.edited).setHours(0, 0, 0, 0);
+            boardList = boardList = boardList.filter(board => board.getUpdateAtDate().setHours(0,0,0,0) === dateSearch)
             if (this.isEmptyList(boardList)) return {success: true, message: "Board list is empty", data: boardList};
         }
         if (args.createdAfter) {
             const dateSearch = new Date(args.createdAfter);
-            boardList = boardList.filter(board => board.getCreatedAtDate() > dateSearch);
+            boardList = boardList = boardList.filter(board => board.getCreatedAtDate() > dateSearch);
             if (this.isEmptyList(boardList)) return {success: true, message: "Board list is empty", data: boardList};
         }
 
         if (args.createdBefore) {
             const dateSearch = new Date(args.createdBefore);
-            boardList = boardList.filter(board => board.getCreatedAtDate() < dateSearch);
+            boardList = boardList = boardList.filter(board => board.getCreatedAtDate() < dateSearch);
             if (this.isEmptyList(boardList)) return {success: true, message: "Board list is empty", data: boardList};
         }
         return {success: true, message: "Board listed", data: boardList};
@@ -80,5 +85,22 @@ export class ListBoardCommand extends AbstractCommand<BoardManager> {
 
     private isEmptyList(list : Board[]) {
         return list.length === 0;
+    }
+
+    private printBoards(boards: Board[]) {
+        if (boards.length === 0) {
+            console.log("No boards to display.");
+            return;
+        }
+
+        boards.forEach((board, index) => {
+            console.log(`\nBoard #${index + 1}`);
+            console.log("---------------");
+            console.log(`Name       : ${board.name}`);
+            console.log(`Description: ${board.description || ""}`);
+            console.log(`Status     : ${board.status}`);
+            console.log(`Created At : ${board.createdAt.toLocaleString()}`);
+            console.log(`Updated At : ${board.updatedAt.toLocaleString()}`);
+        });
     }
 }

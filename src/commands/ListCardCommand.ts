@@ -14,7 +14,7 @@ export class ListCardCommand extends AbstractCommand<BoardManager> {
     }
 
     public getName(): string {
-        return "lits-card";
+        return "list-card";
     }
 
     public getDescription(): string {
@@ -36,7 +36,7 @@ export class ListCardCommand extends AbstractCommand<BoardManager> {
                 const data: Record<string, string> = {
                     nameBoard: boardName
                 }
-                const fields = ["search", "created", "edited", "createdAfter", "createdBefore"] as const;
+                const fields = ["search", "status", "created", "edited", "createdAfter", "createdBefore"] as const;
                 for (const key of fields) {
                     if (option[key] !== undefined) {
                         (data as any)[key] = option[key];
@@ -45,6 +45,9 @@ export class ListCardCommand extends AbstractCommand<BoardManager> {
 
                 const result = this.exec(data)
                 this.printResult(result)
+                if (this.isExecReturnList(result)) {
+                    this.printCards(result.data as Card[])
+                }
             })
     }
 
@@ -62,31 +65,43 @@ export class ListCardCommand extends AbstractCommand<BoardManager> {
             return {success: false, message: "Card list is empty"};
         }
         if (args.search) {
+            args.search = args.search.toLowerCase();
             cardList = cardList.filter(card =>
-                card.name.includes(args.search as string) ||
-                card.description?.includes(args.search as string))
+                card.name.toLowerCase().includes(args.search as string) ||
+                card.description?.toLowerCase().includes(args.search as string))
 
             if (this.isEmptyList(cardList)) return {success: true, message: "Card list is empty", data: cardList};
         }
+
+        if (args.status) {
+            args.status = args.status.toLowerCase();
+            cardList = cardList.filter(card => card.status.toLowerCase() === args.status);
+
+            if (this.isEmptyList(cardList)) return {success: true, message: "Card list is empty", data: cardList};
+        }
+
         if (args.created) {
-            const dateSearch = new Date(args.created);
-            cardList = cardList.filter(card => card.getCreatedAtDate() === dateSearch)
+            const dateSearch = new Date(args.created).setHours(0, 0, 0, 0);
+            cardList = cardList.filter(card => card.getCreatedAtDate().setHours(0,0,0,0) === dateSearch)
             if (this.isEmptyList(cardList)) return {success: true, message: "Card list is empty", data: cardList};
         }
+
         if (args.edited) {
-            const dateSearch = new Date(args.edited);
-            cardList = cardList.filter(card => card.getUpdateAtDate() === dateSearch)
+            const dateSearch = new Date(args.edited).setHours(0, 0, 0, 0);
+            cardList = cardList.filter(card => card.getUpdateAtDate().setHours(0,0,0,0) === dateSearch)
             if (this.isEmptyList(cardList)) return {success: true, message: "Card list is empty", data: cardList};
         }
+
         if (args.createdAfter) {
-            const dateSearch = new Date(args.createdAfter);
-            cardList = cardList.filter(card => card.getCreatedAtDate() > dateSearch);
+            const dateSearch = new Date(args.createdAfter).setHours(0, 0, 0, 0);
+            cardList = cardList.filter(card => card.getCreatedAtDate().setHours(0,0,0,0) > dateSearch);
             if (this.isEmptyList(cardList)) return {success: true, message: "Card list is empty", data: cardList};
         }
 
         if (args.createdBefore) {
             const dateSearch = new Date(args.createdBefore);
-            cardList = cardList.filter(card => card.getCreatedAtDate() < dateSearch);
+            cardList = cardList.filter(card => card.getCreatedAtDate().getDate() < dateSearch.getDate());
+
             if (this.isEmptyList(cardList)) return {success: true, message: "Card list is empty", data: cardList};
         }
         return {success: true, message: "Cards listed", data: cardList};
@@ -94,5 +109,18 @@ export class ListCardCommand extends AbstractCommand<BoardManager> {
 
     private isEmptyList(list : Card[]) {
         return list.length === 0;
+    }
+
+    private printCards(cards: Card[]) {
+        console.log("Cards:");
+        cards.forEach(card => {
+            console.log(`- ID: ${card.id}`);
+            console.log(`  Name: ${card.name}`);
+            console.log(`  Description: ${card.description}`);
+            console.log(`  Status: ${card.status}`);
+            console.log(`  Created At: ${card.createAt}`);
+            console.log(`  Updated At: ${card.updateAt}`);
+            console.log("----------------------");
+        });
     }
 }

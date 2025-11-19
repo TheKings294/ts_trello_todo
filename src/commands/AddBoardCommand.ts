@@ -31,7 +31,7 @@ export class AddBoardCommand extends AbstractCommand<BoardManager> {
                     state: state,
                 }
                 if (option) {
-                    data.description = option
+                    data.description = option.description
                 }
                 const result = this.exec(data)
                 this.printResult(result)

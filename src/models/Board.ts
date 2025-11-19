@@ -16,6 +16,8 @@ export class Board implements IBord {
     createdAt: Date;
     @IsDate()
     updatedAt: Date;
+    @IsAlphanumeric()
+    odlName: string = "";
 
     constructor(DTO: BoardDTO) {
         this.name = DTO.name;

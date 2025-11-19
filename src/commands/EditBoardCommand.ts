@@ -60,6 +60,7 @@ export class EditBoardCommand extends AbstractCommand<BoardManager> {
             Board.description = args.newDescription as string;
         }
         if (args.newName) {
+            Board.odlName = Board.name;
             Board.name = args.newName as string;
         }
         if (args.newStatus) {
@@ -72,6 +73,7 @@ export class EditBoardCommand extends AbstractCommand<BoardManager> {
                 }
             })
         }
+        Board.setUpdateAtDate(new Date(Date.now()));
         this.repo.save(Board);
         return {success: true, message: "Board edited"}
     }

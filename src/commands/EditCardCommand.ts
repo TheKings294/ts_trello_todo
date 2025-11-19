@@ -70,6 +70,7 @@ export class EditCardCommand extends AbstractCommand<BoardManager> {
         if (args.newName) {
             card.name = args.newName;
         }
+        card.setUpdateAtDate(new Date(Date.now()));
         this.repo.save(board)
         return {success: true, message: "Card edit"}
     }

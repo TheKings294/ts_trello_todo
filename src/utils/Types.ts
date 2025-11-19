@@ -37,4 +37,4 @@ export type BoardJSON = {
 }
 
 export type ExecReturn = {success: boolean; message: string};
-export type ExecReturnList = {success: boolean; message: string, data: Array<Board | Card>};
+export type ExecReturnList = {success: boolean; message: string, data: Board[] | Card[]};

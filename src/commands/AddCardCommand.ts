@@ -35,7 +35,7 @@ export class AddCardCommand extends AbstractCommand<BoardManager> {
                     status: status,
                 };
                 if (option) {
-                    data.description = option
+                    data.description = option.description
                 }
 
                 const result: ExecReturn = this.exec(data)

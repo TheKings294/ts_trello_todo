@@ -1,12 +1,13 @@
 import {AbstractRepository} from "./AbstractRepository.js";
 import * as fs from "node:fs";
-import {readdir, readFile} from "node:fs/promises";
+import {readdir, readFile, rename} from "node:fs/promises";
 import {BoardManager} from "../manager/boardManager.js";
-import type {BoardDTO, BoardJSON, CardJSON} from "../utils/Types.js";
+import type {BoardJSON, CardJSON} from "../utils/Types.js";
 import {Board} from "../models/Board.js";
 import {Card} from "../models/Card.js";
 import {existsSync, writeFileSync} from "node:fs";
 import {mkdirSync} from "fs";
+import path from "path";
 
 export class BoardRepository extends AbstractRepository {
     private path(board: string): string {
@@ -20,8 +21,8 @@ export class BoardRepository extends AbstractRepository {
         }
         const saveDir= await readdir("./data");
 
-        for (const file in saveDir) {
-            const filePath = "../data/" + file;
+        for (const file of saveDir) {
+            const filePath = "./data/" + path.basename(file);
             const content = await readFile(filePath, 'utf8');
             const objectContent: BoardJSON= JSON.parse(content);
 
@@ -55,7 +56,10 @@ export class BoardRepository extends AbstractRepository {
         return manager
     }
 
-    public save(boardData: Board) {
+    public async save(boardData: Board) {
+        if (boardData.odlName.length !== 0) {
+            await this.renameFile(this.path(boardData.odlName), this.path(boardData.name));
+        }
         this.prepare(boardData.name);
         const CardJSON: Array<CardJSON> = this.cardListToJSON(boardData.card.getCardList());
         const BoardJSON: BoardJSON = {
@@ -96,12 +100,16 @@ export class BoardRepository extends AbstractRepository {
             JSON.push({
                 id: card.id,
                 name: card.name,
-                description: card.description || "",
+                description: typeof card.description === 'undefined' ? '' : card.description,
                 status: card.status,
                 createAt: card.createAt.toISOString(),
                 updateAt: card.updateAt.toISOString(),
             });
         })
         return JSON;
+    }
+
+    private async renameFile(oldName: string, newName: string) {
+        await rename(oldName, newName);
     }
 }
