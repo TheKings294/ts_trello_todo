@@ -1,5 +1,5 @@
 {
-  "name": "ts_trello_todo",
+  "name": "ts_board_todo",
   "version": "1.0.0",
   "description": "Un gestionnaire de tache et todo en ligne de commande",
   "main": "app.js",
