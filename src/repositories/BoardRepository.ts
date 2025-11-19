@@ -19,7 +19,7 @@ export class BoardRepository extends AbstractRepository {
         if (!existsSync('./data')) {
             return manager;
         }
-        const saveDir= await readdir("./data");
+        const saveDir= await readdir("./data", { withFileTypes: false });
 
         for (const file of saveDir) {
             const filePath = "./data/" + path.basename(file);
