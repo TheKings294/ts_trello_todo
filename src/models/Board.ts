@@ -3,12 +3,16 @@ import type {Card} from "./Card.js";
 import type {BoardDTO} from "../utils/Types.js";
 import {CardManager} from "../manager/cardManager.js";
 import {IsAlphanumeric, IsArray, IsDate} from "class-validator";
+import {DefaultValue, Required} from "../decorator/decorator.js";
 
 export class Board implements IBord {
+    @Required
     @IsAlphanumeric()
     public name: string;
+    @DefaultValue("")
     @IsAlphanumeric()
-    public description?: string | undefined;
+    public description: string;
+    @Required
     @IsArray()
     status: Array<string>;
     card: CardManager = new CardManager();
