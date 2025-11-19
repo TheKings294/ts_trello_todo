@@ -1,4 +1,5 @@
 import type {Card} from "../models/Card.js";
+import type {Board} from "../models/Board.js";
 
 export type StatusCard = string;
 
@@ -18,3 +19,4 @@ export type BoardDTO = {
 }
 
 export type ExecReturn = {success: boolean; message: string};
+export type ExecReturnList = {success: boolean; message: string, data: Array<Board | Card>};

@@ -14,4 +14,8 @@ export class CardManager {
     public deleteCard(card: Card): void  {
         this.card.splice(this.card.indexOf(card), 1);
     }
+
+    public getCardList(): Card[] {
+        return this.card;
+    }
 }
