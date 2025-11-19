@@ -18,5 +18,23 @@ export type BoardDTO = {
     card: Array<Card>;
 }
 
+export type CardJSON = {
+    id: string;
+    name: string;
+    description: string;
+    status: string;
+    createAt: string;
+    updateAt: string;
+}
+
+export type BoardJSON = {
+    name: string;
+    description: string;
+    status: Array<string>;
+    createAt: string;
+    updateAt: string;
+    cards: Array<CardJSON>;
+}
+
 export type ExecReturn = {success: boolean; message: string};
 export type ExecReturnList = {success: boolean; message: string, data: Array<Board | Card>};

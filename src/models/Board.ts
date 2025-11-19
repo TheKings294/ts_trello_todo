@@ -2,13 +2,19 @@ import type {IBord} from "../interfaces/BordInterface.js";
 import type {Card} from "./Card.js";
 import type {BoardDTO} from "../utils/Types.js";
 import {CardManager} from "../manager/cardManager.js";
+import {IsAlphanumeric, IsArray, IsDate} from "class-validator";
 
 export class Board implements IBord {
+    @IsAlphanumeric()
     public name: string;
+    @IsAlphanumeric()
     public description?: string | undefined;
+    @IsArray()
     status: Array<string>;
     card: CardManager = new CardManager();
+    @IsDate()
     createdAt: Date;
+    @IsDate()
     updatedAt: Date;
 
     constructor(DTO: BoardDTO) {

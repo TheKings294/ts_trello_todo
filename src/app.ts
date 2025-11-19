@@ -20,8 +20,8 @@ program
     .description("Task manager CLI")
     .version("1.0.0")
 
-const manager = new BoardManager()
 const boardRepository = new BoardRepository()
+const manager: BoardManager = await boardRepository.load()
 
 const commandList: AbstractCommand<any>[] = [
     new AddCardCommand(boardRepository, manager),
@@ -37,6 +37,5 @@ const commandList: AbstractCommand<any>[] = [
 commandList.forEach((command: AbstractCommand<any>) => {
     command.register(program);
 })
-
 
 program.parse(process.argv);
