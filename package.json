@@ -36,7 +36,7 @@
     "README.md"
   ],
   "bin": {
-    "task": ".dist/app.js"
+    "todo": "./dist/app.js"
   },
   "engines": {
     "node": ">=18.0.0"
